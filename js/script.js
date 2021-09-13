@@ -7,11 +7,6 @@ colorSelection.disabled = 'true';
 designSelection = document.querySelector('#design')
 
 
-
-let test = document.querySelector("#activities-box > label:nth-child(3) > span.activity-cost").textContent
-let int = parseInt(test);
-console.log(int);
-
 // this code will listen to the 'other' selection being targeted and if so, it will show the 'other' field.
 jobRoleSelection.addEventListener('change', (e) => {
   target = e.target.value
@@ -59,17 +54,29 @@ designSelection.addEventListener('change', (e) => {
    }
 });
 
-
-const activityFieldset = document.getElementById('activities');
-let labelCost = document.getElementById('activities-cost');
+////****Costing section****////
+const activityFieldset = document.getElementById('activities'); //This selects the fieldset
+let labelCost = document.getElementById('activities-cost'); //This is for the total cost shown on form
 let totalAmount = 0; //total amount for product selection
 
+//event listener on the fieldset to listen to any change events within checkbox elements
 activityFieldset.addEventListener('change', (e) => {
-  let checkedItem = event.target; //grabbing the event object
-  let label = checkedItem.parentElement; //transversing the the parent of the target item
-  let cost = label.querySelector('.activity-cost').textContent //selecting the cost figure string
-  let intCost = cost.substr(1) //stripping the $ off the string to use it as an integer in next line
-  totalAmount += parseInt(intCost); //convering intCost string to integer and adding value to total amount
-  labelCost.innerHTML = `Total: $${totalAmount}`;//
+  let target = event.target; //grabbing the event element
+  let ticketPrice = parseInt(target.getAttribute('data-cost')); //grabbing product cost and converting to integer
+  if (target.checked) { //if target is checked
+    totalAmount += ticketPrice; //increase the totalAmount by the ticketPrice
+  } else if (target.checked === false) { //else if the checkbox is not checked (or unchecked)
+    totalAmount -= ticketPrice; //minus the totalAmount by the ticketPrice;
+  }
+  labelCost.innerHTML = `Total: $${totalAmount}`; //setting the innerHTML for the total price using template literals
+});
 
+
+////****Payment Section****////
+
+let payment = document.querySelector('.payment-methods');
+
+payment.addEventListener('change', (e) => {
+  let selection = e.target;
+  console.log(selection)
 });
