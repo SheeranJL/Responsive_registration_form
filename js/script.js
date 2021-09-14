@@ -76,7 +76,31 @@ activityFieldset.addEventListener('change', (e) => {
 
 let payment = document.querySelector('.payment-methods');
 
+function showHideMenu(id, toggle) {
+  document.querySelector(id).hidden = toggle;
+}
+
+function hideShowFlex(id, toggle) {
+  document.querySelector(id).style.display = toggle;
+}
+
 payment.addEventListener('change', (e) => {
   let selection = e.target;
-  console.log(selection)
+  if (selection.value === 'credit-card') {
+    showHideMenu('#paypal', 'true');
+    showHideMenu('#bitcoin', 'true');
+    hideShowFlex('.credit-card-box', '');
+    hideShowFlex('.expiration-box', '');
+  } else if (selection.value === 'paypal') {
+    showHideMenu('#paypal', '');
+    showHideMenu('#bitcoin', 'true');
+    hideShowFlex('.expiration-box', 'none');
+    hideShowFlex('.credit-card-box', 'none');
+  } else if (selection.value === 'bitcoin') {
+    showHideMenu('#paypal', 'true')
+    showHideMenu('#bitcoin', '');
+    hideShowFlex('.expiration-box', 'none');
+    hideShowFlex('.credit-card-box', 'none');
+  }
+
 });
