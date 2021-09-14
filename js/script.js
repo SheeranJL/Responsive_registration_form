@@ -46,10 +46,8 @@ designSelection.addEventListener('change', (e) => {
     }
 });
 
-
-
 ////****Costing section****////
-const activityFieldset = document.getElementById('activities'); //This selects the fieldset
+let activityFieldset = document.getElementById('activities'); //This selects the fieldset
 let labelCost = document.getElementById('activities-cost'); //This is for the total cost shown on form
 let totalAmount = 0; //total amount for product selection
 
@@ -117,30 +115,56 @@ form.addEventListener('submit', (e) => {
 
   if (nameReg.test(nameField.value) === false) {
     alert('You must enter a name');
+    event.preventDefault()
   }
   else if (emailReg.test(emailField.value) === false) {
     alert('You must enter a valid email');
+    event.preventDefault()
   }
   else if (jobTitle.value === 'Select Job Role') {
     alert('You must select a job title');
+    event.preventDefault()
   }
   else if (creditCardInfo.style.display === '') { //if the credit card info is showing....
     // add if statements here
     if (cardNumReg.test(creditCardNum.value) === false) {
       alert('Enter a card number 13 or 16 numbers long with no spaces or dashes')
+      event.preventDefault()
     }
     else if (zipCodeReg.test(zipCode.value) === false) {
       alert('You must enter a 5 digit zip code');
+      event.preventDefault()
     }
     else if (cvvReg.test(cvvCode.value) === false) {
       alert('You must enter a 3 digit cvv');
+      event.preventDefault()
     }
     else {
       console.log('success');
-      event.preventDefault()
+      //event.preventDefault()
     }
     } else {
       console.log('success');
-      event.preventDefault()
   }
+});
+
+
+///***Accessibility***///
+
+const checkboxes = document.querySelectorAll('input[type=checkbox]');
+
+Array.from(checkboxes).forEach((checkbox) => {
+  let checkboxElement = checkbox;
+
+  checkboxElement.addEventListener('focus', (e) => {
+    let target = e.target;
+    let checkboxParent = target.parentNode;
+    checkboxParent.classList.add('focus');
+  });
+
+  checkboxElement.addEventListener('blur', (e) => {
+    let target = e.target;
+    let checkboxParent = target.parentNode;
+    checkboxParent.classList.remove('focus');
+  });
 });
