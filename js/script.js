@@ -17,42 +17,36 @@ jobRoleSelection.addEventListener('change', (e) => {
   }
 });
 
+
 // this code will listen for a change in the selection dropdown and will 'show' the color menu when an option is selected.
 designSelection.addEventListener('change', (e) => {
   target = e.target.type;
   shirtType = e.target.value;
-  console.log(shirtType);
-  console.log(target);
-  if (target === 'select-one') {
-    colorSelection.disabled = '';
-  } else {
-    colorSelection.disabled = 'true'
-  }
-  //this code will display only the available colors depending on what shirt is selected
-   if (shirtType === 'js puns') {
-     for (let i = 1; i <= colorSelection.length; i++) {
-       if (colorSelection.children[i].dataset.theme === 'js puns') {
-         colorSelection.children[1].hidden = '';
-         colorSelection.children[2].hidden = '';
-         colorSelection.children[3].hidden = '';
-         colorSelection.children[4].hidden = 'true';
-         colorSelection.children[5].hidden = 'true';
-         colorSelection.children[6].hidden = 'true';
-       }
-     }
-   } else if (shirtType === 'heart js') {
-      for (let i = 1; i <= colorSelection.length; i++) {
-        if (colorSelection.children[i].dataset.theme === 'heart js') {
-          colorSelection.children[1].hidden = 'true';
-          colorSelection.children[2].hidden = 'true';
-          colorSelection.children[3].hidden = 'true';
-          colorSelection.children[4].hidden = '';
-          colorSelection.children[5].hidden = '';
-          colorSelection.children[6].hidden = '';
-       }
-     }
-   }
+    if (target === 'select-one') {
+      colorSelection.disabled = '';
+    } else {
+      colorSelection.disabled = 'true'
+    }
+    //this code will display only the available colors depending on what shirt is selected
+    if (shirtType === 'js puns') {
+      colorSelection.children[1].hidden = '';
+      colorSelection.children[2].hidden = '';
+      colorSelection.children[3].hidden = '';
+      colorSelection.children[4].hidden = 'true';
+      colorSelection.children[5].hidden = 'true';
+      colorSelection.children[6].hidden = 'true';
+    }
+    else if (shirtType === 'heart js') {
+      colorSelection.children[1].hidden = 'true';
+      colorSelection.children[2].hidden = 'true';
+      colorSelection.children[3].hidden = 'true';
+      colorSelection.children[4].hidden = '';
+      colorSelection.children[5].hidden = '';
+      colorSelection.children[6].hidden = '';
+    }
 });
+
+
 
 ////****Costing section****////
 const activityFieldset = document.getElementById('activities'); //This selects the fieldset
@@ -89,18 +83,64 @@ payment.addEventListener('change', (e) => {
   if (selection.value === 'credit-card') {
     showHideMenu('#paypal', 'true');
     showHideMenu('#bitcoin', 'true');
-    hideShowFlex('.credit-card-box', '');
-    hideShowFlex('.expiration-box', '');
+    hideShowFlex('#credit-card', '');
   } else if (selection.value === 'paypal') {
     showHideMenu('#paypal', '');
     showHideMenu('#bitcoin', 'true');
-    hideShowFlex('.expiration-box', 'none');
-    hideShowFlex('.credit-card-box', 'none');
+    hideShowFlex('#credit-card', 'none');
   } else if (selection.value === 'bitcoin') {
     showHideMenu('#paypal', 'true')
     showHideMenu('#bitcoin', '');
-    hideShowFlex('.expiration-box', 'none');
-    hideShowFlex('.credit-card-box', 'none');
+    hideShowFlex('#credit-card', 'none');
   }
+});
 
+///***Form Validation Section***///
+
+let submit = document.querySelector('button[type="submit"]');
+let form = document.querySelector('form');
+let nameField = document.querySelector('#name');
+let emailField = document.querySelector('#email');
+let jobTitle = document.querySelector('#title');
+let creditCardInfo = document.querySelector('#credit-card');
+let zipCode = document.querySelector('#zip');
+let cvvCode = document.querySelector('#cvv')
+let creditCardNum = document.querySelector('#cc-num');
+
+form.addEventListener('submit', (e) => {
+  let target = event.target;
+  let nameReg = /\S+/;
+  let emailReg = /^[^@]+@[^@.]+\.[a-z]+$/i;
+  let cardNumReg = /^(\d{13,16})$/g;
+  let zipCodeReg = /^(\d{5})$/g;
+  let cvvReg = /^(\d{3})$/g;
+
+  if (nameReg.test(nameField.value) === false) {
+    alert('You must enter a name');
+  }
+  else if (emailReg.test(emailField.value) === false) {
+    alert('You must enter a valid email');
+  }
+  else if (jobTitle.value === 'Select Job Role') {
+    alert('You must select a job title');
+  }
+  else if (creditCardInfo.style.display === '') { //if the credit card info is showing....
+    // add if statements here
+    if (cardNumReg.test(creditCardNum.value) === false) {
+      alert('Enter a card number 13 or 16 numbers long with no spaces or dashes')
+    }
+    else if (zipCodeReg.test(zipCode.value) === false) {
+      alert('You must enter a 5 digit zip code');
+    }
+    else if (cvvReg.test(cvvCode.value) === false) {
+      alert('You must enter a 3 digit cvv');
+    }
+    else {
+      console.log('success');
+      event.preventDefault()
+    }
+    } else {
+      console.log('success');
+      event.preventDefault()
+  }
 });
