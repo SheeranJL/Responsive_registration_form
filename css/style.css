@@ -95,9 +95,13 @@ legend {
 	width: 100%;
 }
 
+#job-hint {
+  color: red;
+}
+
 label {
   display: block;
-  color: rgb(0, 0, 0);
+  /* color: rgb(0, 0, 0);*/
   margin-top: 27px;
   margin-bottom: 0;
   transition: all 0.3s ease-out;
@@ -209,6 +213,13 @@ button:hover {
   background: rgb(218, 174, 81);
   border: 1px solid rgba(213, 51, 105, 0.3);
   box-shadow: 1px 1px 25px rgba(213, 51, 105, 0.5) inset, 3px 3px 10px rgba(50, 50, 50, 0.3);
+}
+
+#form-hint {
+  display: none;
+  color: red; !important;
+  margin: 0;
+  transition: all 0.3s ease-out;
 }
 
 .hint {
