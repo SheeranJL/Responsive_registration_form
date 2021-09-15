@@ -55,19 +55,10 @@ let totalAmount = 0; //total amount for product selection
 
 let paymentMethod = document.querySelector('#payment');
 
-
-function showHideMenu(id, toggle) {
-  document.querySelector(id).hidden = toggle;
-}
-
-function hideShowFlex(id, toggle) {
-  document.querySelector(id).style.display = toggle;
-}
-
 ///Select Credit Card as default opton on page load///
 function defaultPaymentOption() {
   const defaultOption = document.querySelector('[value = "credit-card"]');
-  defaultOption.selected = true;
+  defaultOption.selected = false;
 }
 defaultPaymentOption();
 
@@ -93,8 +84,9 @@ function paymentMethodInfo() {
     }
   })
 };
-paymentMethodInfo();
 
+//calling function to s
+paymentMethodInfo();
 
 //event listener on the fieldset to listen to any change events within checkbox elements
 activityFieldset.addEventListener('change', (e) => {
@@ -119,17 +111,17 @@ const cvvField = document.getElementById('cvv');
 const activitySelect = document.getElementById('activities')
 ///***Form Validation Section***///
 
-function validateName() {
+let validateName = () => {
   let nameReg = /\S+/;
   return nameReg.test(nameField.value);
 }
 
-function validateEmail() {
+let validateEmail = () => {
   let emailReg = /^[^@]+@[^@.]+\.[a-z]+$/i;
   return emailReg.test(emailField.value);
 }
 
-function jobSelect() {
+let jobSelect = () => {
   if (jobRoleSelection.value === 'Select Job Role') {
     return false
   } else {
@@ -137,7 +129,7 @@ function jobSelect() {
   }
 }
 
-function validateActivitySelection() {
+let validateActivitySelection = () => {
   if (totalAmount === 0) {
     return false;
   } else {
@@ -145,22 +137,22 @@ function validateActivitySelection() {
   }
 }
 
-function validateCardNum () {
+let validateCardNum = () => {
   const cardNumReg = /^(\d{13,16})$/g;
   return cardNumReg.test(cardNumberField.value);
 }
 
-function validateZipCode() {
+let validateZipCode = () => {
   const zipCodeReg = /^(\d{5})$/g;
   return zipCodeReg.test(zipCodeField.value);
 }
 
-function validateCVV() {
+let validateCVV = () => {
   const cvvReg = /^(\d{3})$/g;
   return cvvReg.test(cvvField.value);
 }
 
-function validateAllFunction(functionName, element, event, message) {
+let validateAllFunction = (functionName, element, event, message) => {
   if (functionName() === false) {
     element.parentElement.classList.add('not-valid');
     element.parentElement.classList.remove('valid');
@@ -174,7 +166,7 @@ function validateAllFunction(functionName, element, event, message) {
   }
 }
 
-function validateJobSelection(functionName, element, event, message) {
+let validateJobSelection = (functionName, element, event, message) => {
   if (functionName() === false) {
     element.style.borderColor = 'red';
     console.log('No Job Selected')
@@ -186,6 +178,7 @@ function validateJobSelection(functionName, element, event, message) {
     jobSelection.lastElementChild.classList.add('hint');
   }
 }
+
 
 form.addEventListener('submit', (event) => {
   const target = event.target;
