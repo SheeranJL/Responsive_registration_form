@@ -6,12 +6,12 @@ let cardNumField = document.getElementById('cc-num');
 let zipCodeField = document.getElementById('zip');
 let cvvCodeField = document.getElementById('cvv');
 let activitiesBox = document.querySelectorAll('[type="checkbox"]');
-nameField.focus();
+nameField.focus(); //On page load the 'name' field will be selected.
 
 /// SHOW/HIDE 'OTHER' JOB ROLE ///
+otherField.hidden = true //Hide the 'other' field by default on page load
 
-otherField.hidden = true //Hide by default on load
-
+//This code will listen to click in the Job Role dropdown. If 'other' is selected, the textbox will appear. If not, it will hide.
 title.addEventListener('change', (e) =>{
   target = e.target.value;
   if (target === 'other') {
@@ -22,10 +22,8 @@ title.addEventListener('change', (e) =>{
 });
 
 
-//// Shirt style ////
 let designDropdown = document.getElementById('design');
 let designColorOptions = document.getElementById('color').children;
-
 
 
 ///helper function ///
@@ -58,14 +56,13 @@ designDropdown.addEventListener('change', (e) => {
 
 
 ///Activities Section///
-
 const activitySectionFieldset = document.getElementById('activities');
 let totalCost = document.getElementById('activities-cost');
-let cost = 0;
+let cost = 0; //setting running total cost to zero.
 
 //Tuesday 9am-12pm
 
-//This EV, and the code inside, will calculate the total cost of the tickets depending on the selection.
+//This EV, and the code inside, will calculate the total cost of the tickets depending on the selection and add to the running 'cost' variable
 activitySectionFieldset.addEventListener('change', (e) => {
   target = e.target;
 
@@ -79,13 +76,12 @@ activitySectionFieldset.addEventListener('change', (e) => {
 })
 
 
-///payment Section///
 const paymentDropdown = document.getElementById('payment');
 const cardSection = document.getElementById('credit-card');
 const paypalSection = document.getElementById('paypal');
 const bitcoinSection = document.getElementById('bitcoin');
 
-//Function to show Credit Card payment option by default
+//This function will, on page load, select the card payment option and hide the paypal and bitcoin sections
 function defaultOption() {
   let ccOption = document.querySelector('[value="credit-card"]');
   ccOption.selected = true;
@@ -93,6 +89,7 @@ function defaultOption() {
   bitcoinSection.style.display = 'none';
 }
 defaultOption();
+
 
 //Function to hide/show relevant payment sections depending on user input
 let paymentMethods = () => {
@@ -117,8 +114,7 @@ let paymentMethods = () => {
 paymentMethods();
 
 
-///validation Helpers///
-
+///validation helper functions to add/remove styling depending on whether input information is valud or not.
 const validateSuccess = (element) => {
   element.parentElement.classList.add('valid');
   element.parentElement.classList.remove('not-valid');
@@ -155,6 +151,8 @@ const validateActivitiesFail = (element) => {
   element.firstElementChild.parentElement.lastElementChild.classList.remove('hint')
 }
 
+
+///The functions below will validate each input field and will call the validation styling functions above depending on the validation///
 
 const nameValidator = () => {
   const nameIsValid = /\S+/.test(nameField.value);
@@ -231,7 +229,7 @@ const activityValidator = () => {
 }
 
 
-//real-time validation feedback///
+//real-time validation event listener. This code will run on each change/keyup when user inputs information for each section.//
 nameField.addEventListener('keyup', nameValidator);
 emailField.addEventListener('keyup', emailValidator);
 cardNumField.addEventListener('keyup', cardValidator);
@@ -240,21 +238,24 @@ cvvCodeField.addEventListener('keyup', cvvValidator);
 title.addEventListener('change', jobSelectionValidator)
 activitySectionFieldset.addEventListener('change', activityValidator);
 
-//submit button validator///
-const form = document.querySelector('form');
 
+const form = document.querySelector('form'); //selecting form section which we will use to listen to submit events
+
+//This function will ensure that the submit activity will only run if all fields are valid.
 const clickValidator = (validatorFunc) => {
   if (validatorFunc() === false) {
     event.preventDefault();
   }
 };
 
+//This eventlistener listens to submit actions on the form and tests each field for validity ysing the ClickValidator function above.
 form.addEventListener('submit', (e) => {
   clickValidator(nameValidator);
   clickValidator(emailValidator);
   clickValidator(activityValidator);
   clickValidator(jobSelectionValidator);
 
+  //Only if the card selection is displayed will the code check for validity in the card input fields.
   if (cardSection.style.display === '') {
     clickValidator(cardValidator);
     clickValidator(zipValidator);
@@ -268,14 +269,15 @@ form.addEventListener('submit', (e) => {
 activitiesFieldset = document.getElementById('activities');
 activitiesBox = document.querySelectorAll('[type="checkbox"]');
 
+//This function will take the list of checkboxes and itierate over them to allow for the focus & blur events to run.
 Array.from(activitiesBox).forEach((activity) => {
   let activityCheck = activity;
-
+  //Code below will assign the 'focus' class to elements that are tabbed/focused on adding the blue outline style.
   activity.addEventListener('focus', (e) => {
     target = e.target;
     target.parentElement.className = 'focus';
   });
-
+  //Code below will assign the 'blur' class to elements that are tabbed/focused on removing the blue outline style
   activity.addEventListener('blur', (e) => {
     target = e.target;
     target.parentElement.className = 'blur';
