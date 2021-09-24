@@ -1,10 +1,10 @@
-let title = document.getElementById('title');
-let otherField = document.getElementById('other-job-role')
-let nameField = document.getElementById('name');
-let emailField = document.getElementById('email');
-let cardNumField = document.getElementById('cc-num');
-let zipCodeField = document.getElementById('zip');
-let cvvCodeField = document.getElementById('cvv');
+const title = document.getElementById('title');
+const otherField = document.getElementById('other-job-role')
+const nameField = document.getElementById('name');
+const emailField = document.getElementById('email');
+const cardNumField = document.getElementById('cc-num');
+const zipCodeField = document.getElementById('zip');
+const cvvCodeField = document.getElementById('cvv');
 let activitiesBox = document.querySelectorAll('[type="checkbox"]');
 nameField.focus(); //On page load the 'name' field will be selected.
 
@@ -22,8 +22,8 @@ title.addEventListener('change', (e) =>{
 });
 
 
-let designDropdown = document.getElementById('design');
-let designColorOptions = document.getElementById('color').children;
+const designDropdown = document.getElementById('design');
+const designColorOptions = document.getElementById('color').children;
 
 
 ///helper function ///
@@ -43,6 +43,7 @@ colorDropdown.disabled = true;
 designDropdown.addEventListener('change', (e) => {
   target = e.target.value;
   console.log(target);
+  color.value = 'Select a design theme above'
   if (target === 'js puns') {
     colorDropdown[0].style.display = 'none';
     colorDropdown.disabled = false;
@@ -57,7 +58,7 @@ designDropdown.addEventListener('change', (e) => {
 
 ///Activities Section///
 const activitySectionFieldset = document.getElementById('activities');
-let totalCost = document.getElementById('activities-cost');
+const totalCost = document.getElementById('activities-cost');
 let cost = 0; //setting running total cost to zero.
 
 //Tuesday 9am-12pm
@@ -83,7 +84,7 @@ const bitcoinSection = document.getElementById('bitcoin');
 
 //This function will, on page load, select the card payment option and hide the paypal and bitcoin sections
 function defaultOption() {
-  let ccOption = document.querySelector('[value="credit-card"]');
+  const ccOption = document.querySelector('[value="credit-card"]');
   ccOption.selected = true;
   paypalSection.style.display = 'none';
   bitcoinSection.style.display = 'none';
@@ -271,7 +272,7 @@ activitiesBox = document.querySelectorAll('[type="checkbox"]');
 
 //This function will take the list of checkboxes and itierate over them to allow for the focus & blur events to run.
 Array.from(activitiesBox).forEach((activity) => {
-  let activityCheck = activity;
+  const activityCheck = activity;
   //Code below will assign the 'focus' class to elements that are tabbed/focused on adding the blue outline style.
   activity.addEventListener('focus', (e) => {
     target = e.target;
